@@ -29,7 +29,6 @@ export const useApplications = ({ session, queryString, updateSession }: UseAppl
         try {
             const formattedQuery = queryString.startsWith('?') ? queryString : `?${queryString}`;
             const url = `${API_BASE_URL}/application${formattedQuery}`;
-            console.log('Fetching from URL:', url);
 
             const response = await fetch(url, {
                 headers: getAuthHeaders(),
@@ -62,7 +61,6 @@ export const useApplications = ({ session, queryString, updateSession }: UseAppl
 
         try {
             const url = `${API_BASE_URL}/application/${applicationId}`;
-            console.log('Fetching history from URL:', url);
 
             const response = await fetch(url, {
                 headers: getAuthHeaders(),

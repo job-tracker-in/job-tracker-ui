@@ -30,14 +30,11 @@ export default function LoginPage() {
     };
 
     const handleForgotPassword = () => {
-        const keycloakIssuer = process.env.NEXT_PUBLIC_KEYCLOAK_ISSUER;
+        const keycloakUrl = process.env.NEXT_PUBLIC_KEYCLOAK_ISSUER;
         const clientId = process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID;
-        const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 
-        if (keycloakIssuer && clientId && appUrl) {
-            window.location.href =
-                `${keycloakIssuer}/protocol/openid-connect/auth?client_id=${clientId}&response_type=code&scope=openid&kc_action=RESET_PASSWORD&redirect_uri=${appUrl}/login`;
-        }
+        window.location.href =
+            `${keycloakUrl}/login-actions/reset-credentials?client_id=${clientId}`;
     };
 
     // Show loading state during authentication check
@@ -133,7 +130,7 @@ export default function LoginPage() {
                 {/* Forgot Password */}
                 <button
                     onClick={handleForgotPassword}
-                    disabled={isSigningIn}
+                    type="button"
                     className="w-full py-3 bg-white/5 hover:bg-white/10 text-white rounded-full font-medium transition-all duration-300 border border-white/20 hover:border-white/40 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     Forgot your password?

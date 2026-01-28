@@ -66,7 +66,6 @@ export const authOptions: NextAuthOptions = {
       // Initial sign in
       if (account) {
         console.log("JWT Callback - Initial sign in");
-        console.log("Account:", account);
         
         return {
           ...token,

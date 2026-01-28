@@ -127,9 +127,6 @@ export default function ApplicationHistoryModal({
                                                     {/* Date */}
                                                     <div className="text-sm text-gray-500 mb-2">
                                                         {formatDate(item.updatedDate)}
-                                                        {item.updatedBy && (
-                                                            <span className="ml-2">• by {item.updatedBy}</span>
-                                                        )}
                                                     </div>
 
                                                     {/* Status Change */}
