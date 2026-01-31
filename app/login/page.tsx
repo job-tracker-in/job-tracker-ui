@@ -146,10 +146,10 @@ export default function LoginPage() {
                     <div className="pt-3 border-t border-white/10">
                         <p className="text-blue-50 text-sm mb-1">Need help?</p>
                         <a
-                            href="mailto:support@example.com"
+                            href="mailto:jobapplicationtracker09@gmail.com"
                             className="text-white hover:text-blue-100 text-sm font-medium underline decoration-white/30 hover:decoration-white/60 transition-all"
                         >
-                            Contact us at support@example.com
+                            Contact us at jobapplicationtracker09@gmail.com
                         </a>
                     </div>
                 </div>
