@@ -1,7 +1,7 @@
 "use client";
 
 import { JobApplication } from "@/types/application";
-import KanbanColumn from "./KanbanColumn";
+import KanbanColumn from "@/components/dashboard/KanbanColumn";
 
 interface ApplicationKanbanProps {
     applications: JobApplication[];
