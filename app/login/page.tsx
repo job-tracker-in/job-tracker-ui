@@ -40,8 +40,8 @@ export default function LoginPage() {
     // Show loading state during authentication check
     if (status === "loading") {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-4 border-white border-t-transparent"></div>
+            <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-4 border-cyan-400 border-t-transparent"></div>
             </div>
         );
     }
@@ -52,39 +52,40 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 flex items-center justify-center p-4 relative overflow-hidden">
 
             {/* Animated Background Elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {/* Floating Clouds */}
-                <div className="absolute top-20 left-20 w-32 h-12 bg-white/30 rounded-full blur-xl animate-float"></div>
-                <div className="absolute top-32 right-40 w-24 h-10 bg-white/20 rounded-full blur-xl animate-float-delayed"></div>
-                <div className="absolute top-48 left-1/3 w-28 h-10 bg-white/25 rounded-full blur-xl animate-float-slow"></div>
+                {/* Glowing Orbs */}
+                <div className="absolute top-20 left-20 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-float"></div>
+                <div className="absolute top-32 right-40 w-72 h-72 bg-emerald-500/15 rounded-full blur-3xl animate-float-delayed"></div>
+                <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl animate-float-slow"></div>
 
-                {/* Twinkling Stars */}
-                <div className="absolute top-24 right-1/4 w-1 h-1 bg-white rounded-full animate-twinkle"></div>
-                <div className="absolute top-40 left-1/4 w-1 h-1 bg-white rounded-full animate-twinkle-delayed"></div>
-                <div className="absolute top-56 right-1/3 w-1 h-1 bg-white rounded-full animate-twinkle-slow"></div>
-                <div className="absolute top-72 left-1/2 w-1 h-1 bg-white rounded-full animate-twinkle"></div>
+                {/* Twinkling Stars/Particles */}
+                <div className="absolute top-24 right-1/4 w-1 h-1 bg-cyan-400 rounded-full animate-twinkle shadow-lg shadow-cyan-400/50"></div>
+                <div className="absolute top-40 left-1/4 w-1 h-1 bg-emerald-400 rounded-full animate-twinkle-delayed shadow-lg shadow-emerald-400/50"></div>
+                <div className="absolute top-56 right-1/3 w-1 h-1 bg-teal-400 rounded-full animate-twinkle-slow shadow-lg shadow-teal-400/50"></div>
+                <div className="absolute top-72 left-1/2 w-1 h-1 bg-cyan-400 rounded-full animate-twinkle shadow-lg shadow-cyan-400/50"></div>
+                <div className="absolute bottom-32 right-1/4 w-1 h-1 bg-emerald-400 rounded-full animate-twinkle-delayed shadow-lg shadow-emerald-400/50"></div>
 
-                {/* Mountain Silhouettes */}
+                {/* Dark Mountains/Waves Silhouettes */}
                 <div className="absolute bottom-0 left-0 w-full h-48">
-                    <div className="absolute bottom-0 right-1/4 w-64 h-32 bg-blue-800/40 rounded-t-full blur-md"></div>
-                    <div className="absolute bottom-0 left-1/3 w-48 h-40 bg-blue-900/30 rounded-t-full blur-md"></div>
-                    <div className="absolute bottom-0 right-1/3 w-56 h-36 bg-blue-800/50 rounded-t-full blur-md"></div>
+                    <div className="absolute bottom-0 right-1/4 w-64 h-32 bg-slate-800/60 rounded-t-full blur-md"></div>
+                    <div className="absolute bottom-0 left-1/3 w-48 h-40 bg-gray-800/50 rounded-t-full blur-md"></div>
+                    <div className="absolute bottom-0 right-1/3 w-56 h-36 bg-slate-800/70 rounded-t-full blur-md"></div>
                 </div>
 
                 {/* Subtle Grid Pattern */}
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:50px_50px] opacity-20"></div>
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.03)_1px,transparent_1px)] bg-[size:50px_50px] opacity-40"></div>
             </div>
 
             {/* Login Card */}
-            <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl p-8 sm:p-10 w-full max-w-md border border-white/20 transform hover:scale-[1.02] transition-transform duration-300">
+            <div className="relative bg-slate-800/40 backdrop-blur-xl rounded-3xl shadow-2xl p-8 sm:p-10 w-full max-w-md border border-slate-700/50 transform hover:scale-[1.02] transition-transform duration-300">
 
                 {/* Logo/Icon */}
                 <div className="flex justify-center mb-6">
-                    <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-lg border border-white/30">
-                        <KeyRound className="w-8 h-8 text-white" strokeWidth={1.5} />
+                    <div className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-emerald-400 rounded-2xl flex items-center justify-center shadow-lg shadow-cyan-500/30 border border-cyan-300/20">
+                        <KeyRound className="w-8 h-8 text-gray-900" strokeWidth={2} />
                     </div>
                 </div>
 
@@ -93,7 +94,7 @@ export default function LoginPage() {
                     <h1 className="text-4xl sm:text-5xl font-light text-white tracking-widest mb-2 drop-shadow-lg">
                         WELCOME
                     </h1>
-                    <p className="text-blue-50 text-sm sm:text-base font-light tracking-wide">
+                    <p className="text-slate-300 text-sm sm:text-base font-light tracking-wide">
                         Please sign in to continue
                     </p>
                 </div>
@@ -102,7 +103,7 @@ export default function LoginPage() {
                 <button
                     onClick={handleSignIn}
                     disabled={isSigningIn}
-                    className="w-full py-3.5 bg-white hover:bg-white/95 text-blue-600 rounded-full font-semibold transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:transform-none flex items-center justify-center gap-2 group"
+                    className="w-full py-3.5 bg-gradient-to-r from-cyan-400 to-emerald-400 hover:from-cyan-300 hover:to-emerald-300 text-gray-900 rounded-full font-semibold transition-all duration-300 shadow-xl shadow-cyan-500/20 hover:shadow-2xl hover:shadow-cyan-500/30 transform hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:transform-none flex items-center justify-center gap-2 group"
                 >
                     {isSigningIn ? (
                         <>
@@ -120,10 +121,10 @@ export default function LoginPage() {
                 {/* Divider */}
                 <div className="relative my-6">
                     <div className="absolute inset-0 flex items-center">
-                        <div className="w-full border-t border-white/20"></div>
+                        <div className="w-full border-t border-slate-700"></div>
                     </div>
                     <div className="relative flex justify-center text-sm">
-                        <span className="px-4 bg-transparent text-blue-100 font-light">or</span>
+                        <span className="px-4 bg-slate-800/40 text-slate-400 font-light">or</span>
                     </div>
                 </div>
 
@@ -131,23 +132,23 @@ export default function LoginPage() {
                 <button
                     onClick={handleForgotPassword}
                     type="button"
-                    className="w-full py-3 bg-white/5 hover:bg-white/10 text-white rounded-full font-medium transition-all duration-300 border border-white/20 hover:border-white/40 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-3 bg-slate-700/30 hover:bg-slate-700/50 text-slate-200 hover:text-white rounded-full font-medium transition-all duration-300 border border-slate-600 hover:border-cyan-400/50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     Forgot your password?
                 </button>
 
                 {/* Additional Info */}
                 <div className="mt-6 text-center space-y-3">
-                    <p className="text-blue-50/70 text-xs">
+                    <p className="text-slate-500 text-xs">
                         Secure authentication powered by Keycloak
                     </p>
 
                     {/* Contact Support */}
-                    <div className="pt-3 border-t border-white/10">
-                        <p className="text-blue-50 text-sm mb-1">Need help?</p>
+                    <div className="pt-3 border-t border-slate-700">
+                        <p className="text-slate-400 text-sm mb-1">Need help?</p>
                         <a
                             href="mailto:jobapplicationtracker09@gmail.com"
-                            className="text-white hover:text-blue-100 text-sm font-medium underline decoration-white/30 hover:decoration-white/60 transition-all"
+                            className="text-cyan-400 hover:text-cyan-300 text-sm font-medium underline decoration-cyan-400/30 hover:decoration-cyan-400/60 transition-all"
                         >
                             Contact us at jobapplicationtracker09@gmail.com
                         </a>
@@ -157,8 +158,8 @@ export default function LoginPage() {
 
             {/* Footer Credit */}
             <div className="absolute bottom-4 sm:bottom-6 text-center w-full px-4">
-                <p className="text-white/80 text-sm font-light tracking-wide">
-                    designed with ❤️ by <span className="font-semibold">kr</span>
+                <p className="text-slate-500 text-sm font-light tracking-wide">
+                    designed with <span className="text-red-500">❤️</span> by <span className="font-semibold text-slate-400">kr</span>
                 </p>
             </div>
 
@@ -195,15 +196,15 @@ export default function LoginPage() {
         }
         
         .animate-float {
-          animation: float 6s ease-in-out infinite;
+          animation: float 8s ease-in-out infinite;
         }
         
         .animate-float-delayed {
-          animation: float-delayed 8s ease-in-out infinite;
+          animation: float-delayed 10s ease-in-out infinite;
         }
         
         .animate-float-slow {
-          animation: float-slow 10s ease-in-out infinite;
+          animation: float-slow 12s ease-in-out infinite;
         }
         
         .animate-twinkle {
