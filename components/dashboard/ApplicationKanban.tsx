@@ -13,7 +13,7 @@ interface ApplicationKanbanProps {
 }
 
 export default function ApplicationKanban({
-                                              applications,
+                                              applications = [],
                                               loading,
                                               onUpdate,
                                               onQuickEdit,
@@ -29,6 +29,9 @@ export default function ApplicationKanban({
     ];
 
     const getApplicationsByStatus = (status: string) => {
+        if (!applications || !Array.isArray(applications)) {
+            return [];
+        }
         return applications.filter(app => app.status === status);
     };
 
