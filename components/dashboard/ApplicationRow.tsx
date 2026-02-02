@@ -46,6 +46,13 @@ export default function ApplicationRow({
         }
     };
 
+    const handleSourceClick = (e: React.MouseEvent) => {
+        if (application.jobUrl) {
+            e.preventDefault();
+            window.open(application.jobUrl, '_blank', 'noopener,noreferrer');
+        }
+    };
+
     return (
         <tr className="bg-white hover:bg-gray-50">
             <td className="p-4">
@@ -77,7 +84,20 @@ export default function ApplicationRow({
             </td>
             <td className="p-4 text-sm text-gray-600">{application.location}</td>
             <td className="p-4 text-sm text-gray-800">{application.jobTitle}</td>
-            <td className="p-4 text-sm text-gray-600">{application.source}</td>
+            <td className="p-4 text-sm text-gray-600">
+                {application.jobUrl ? (
+                    <button
+                        onClick={handleSourceClick}
+                        className="flex items-center gap-1 text-blue-600 hover:text-blue-800 hover:underline transition-colors group"
+                        title="Open job posting"
+                    >
+                        {application.source}
+                        <ExternalLink size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </button>
+                ) : (
+                    <span>{application.source}</span>
+                )}
+            </td>
 
             {/* Status - Editable with hover icon */}
             <td className="p-4">

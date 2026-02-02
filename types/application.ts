@@ -9,6 +9,7 @@ export interface JobApplication {
     appliedDate: string;
     notes: string;
     lastModifiedDate: string;
+    jobUrl: string
 }
 
 export interface ApiResponse {
@@ -36,6 +37,7 @@ export interface FormData {
     source: string;
     status: string;
     appliedDate: string;
+    jobUrl: string
     notes: string;
     lastModifiedDate: string;
 }

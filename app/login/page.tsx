@@ -29,14 +29,6 @@ export default function LoginPage() {
         }
     };
 
-    const handleForgotPassword = () => {
-        const keycloakUrl = process.env.NEXT_PUBLIC_KEYCLOAK_ISSUER;
-        const clientId = process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID;
-
-        window.location.href =
-            `${keycloakUrl}/login-actions/reset-credentials?client_id=${clientId}`;
-    };
-
     // Show loading state during authentication check
     if (status === "loading") {
         return (
@@ -116,25 +108,6 @@ export default function LoginPage() {
                             Sign In
                         </>
                     )}
-                </button>
-
-                {/* Divider */}
-                <div className="relative my-6">
-                    <div className="absolute inset-0 flex items-center">
-                        <div className="w-full border-t border-slate-700"></div>
-                    </div>
-                    <div className="relative flex justify-center text-sm">
-                        <span className="px-4 bg-slate-800/40 text-slate-400 font-light">or</span>
-                    </div>
-                </div>
-
-                {/* Forgot Password */}
-                <button
-                    onClick={handleForgotPassword}
-                    type="button"
-                    className="w-full py-3 bg-slate-700/30 hover:bg-slate-700/50 text-slate-200 hover:text-white rounded-full font-medium transition-all duration-300 border border-slate-600 hover:border-cyan-400/50 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    Forgot your password?
                 </button>
 
                 {/* Additional Info */}

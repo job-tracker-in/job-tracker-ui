@@ -19,6 +19,7 @@ export default function AddApplicationModal({
         location: '',
         jobTitle: '',
         source: '',
+        jobUrl: '',
         status: 'APPLIED',
         appliedDate: new Date().toISOString().split('T')[0],
         lastModifiedDate: new Date().toISOString().split('T')[0],
@@ -35,6 +36,7 @@ export default function AddApplicationModal({
                 location: '',
                 jobTitle: '',
                 source: '',
+                jobUrl: '',
                 status: 'APPLIED',
                 appliedDate: new Date().toISOString().split('T')[0],
                 lastModifiedDate: new Date().toISOString().split('T')[0],
@@ -122,6 +124,17 @@ export default function AddApplicationModal({
                                 className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
                             />
                         </div>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Job URL</label>
+                        <input
+                            type="url"
+                            value={formData.jobUrl}
+                            onChange={(e) => setFormData({...formData, jobUrl: e.target.value})}
+                            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
+                            placeholder="https://example.com/job-posting"
+                        />
                     </div>
 
                     <div>
