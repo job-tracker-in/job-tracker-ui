@@ -70,6 +70,9 @@ export default function ApplicationTable({
                         <th className="p-4 text-left text-sm font-semibold text-gray-700">Source</th>
                         <th className="p-4 text-left text-sm font-semibold text-gray-700">Status</th>
                         <th className="p-4 text-left text-sm font-semibold text-gray-700">Applied</th>
+                        <th className="p-4 text-left text-sm font-semibold text-gray-700">Interview</th>
+                        <th className="p-4 text-left text-sm font-semibold text-gray-700">Salary</th>
+                        <th className="p-4 text-left text-sm font-semibold text-gray-700">Recruiter</th>
                         <th className="p-4 text-left text-sm font-semibold text-gray-700">Modified</th>
                         <th className="p-4 text-left text-sm font-semibold text-gray-700">Notes</th>
                     </tr>

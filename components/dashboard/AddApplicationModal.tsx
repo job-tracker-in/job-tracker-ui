@@ -28,6 +28,10 @@ export default function AddApplicationModal({
         appliedDate: new Date().toISOString().split('T')[0],
         lastModifiedDate: new Date().toISOString().split('T')[0],
         notes: '',
+        interviewDate: '',
+        salary: '',
+        recruiterName: '',
+        recruiterEmail: '',
     });
 
     useEffect(() => {
@@ -57,6 +61,10 @@ export default function AddApplicationModal({
                 appliedDate: new Date().toISOString().split('T')[0],
                 lastModifiedDate: new Date().toISOString().split('T')[0],
                 notes: '',
+                interviewDate: '',
+                salary: '',
+                recruiterName: '',
+                recruiterEmail: '',
             });
             onClose();
         }
@@ -190,6 +198,48 @@ export default function AddApplicationModal({
                             className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
                             placeholder="https://example.com/job-posting"
                         />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Interview Date</label>
+                            <input
+                                type="date"
+                                value={formData.interviewDate}
+                                onChange={(e) => setFormData({...formData, interviewDate: e.target.value})}
+                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Salary / Compensation</label>
+                            <input
+                                type="text"
+                                value={formData.salary}
+                                onChange={(e) => setFormData({...formData, salary: e.target.value})}
+                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
+                                placeholder="e.g. $120k, €80k/yr"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Recruiter Name</label>
+                            <input
+                                type="text"
+                                value={formData.recruiterName}
+                                onChange={(e) => setFormData({...formData, recruiterName: e.target.value})}
+                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
+                                placeholder="Jane Smith"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Recruiter Email</label>
+                            <input
+                                type="email"
+                                value={formData.recruiterEmail}
+                                onChange={(e) => setFormData({...formData, recruiterEmail: e.target.value})}
+                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
+                                placeholder="jane@company.com"
+                            />
+                        </div>
                     </div>
 
                     <div>

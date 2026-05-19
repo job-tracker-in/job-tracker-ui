@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { JobApplication, STATUSES, formatStatus } from "@/types/application";
 import StatusBadge from "@/components/common/StatusBadge";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Mail } from "lucide-react";
 
 interface ApplicationRowProps {
     application: JobApplication;
@@ -22,6 +22,16 @@ export default function ApplicationRow({
                                            onQuickEdit,
                                            onViewHistory,
                                        }: ApplicationRowProps) {
+    const daysSince = (date: string) =>
+        Math.floor((Date.now() - new Date(date).getTime()) / 86400000);
+
+    const daysUntil = (date: string) =>
+        Math.ceil((new Date(date).getTime() - Date.now()) / 86400000);
+
+    const showFollowUp =
+        ['APPLIED', 'INTERVIEW'].includes(application.status) &&
+        daysSince(application.lastModifiedDate) >= 7;
+
     const [editingField, setEditingField] = useState<'status' | 'notes' | null>(null);
     const [editValue, setEditValue] = useState('');
     const [expandedNotes, setExpandedNotes] = useState(false);
@@ -54,7 +64,7 @@ export default function ApplicationRow({
     };
 
     return (
-        <tr className="bg-white hover:bg-gray-50">
+        <tr className={`hover:bg-gray-50 ${showFollowUp ? 'bg-orange-50' : 'bg-white'}`}>
             <td className="p-4">
                 <input
                     type="checkbox"
@@ -150,7 +160,48 @@ export default function ApplicationRow({
             </td>
 
             <td className="p-4 text-sm text-gray-600">
-                {new Date(application.appliedDate).toLocaleDateString()}
+                <div className="flex items-center gap-1.5">
+                    {new Date(application.appliedDate).toLocaleDateString()}
+                    {showFollowUp && (
+                        <span className="text-xs px-1.5 py-0.5 rounded-full bg-orange-100 text-orange-700 font-medium whitespace-nowrap">
+                            Follow up?
+                        </span>
+                    )}
+                </div>
+            </td>
+            <td className="p-4 text-sm text-gray-600">
+                {application.interviewDate ? (
+                    <span className={
+                        application.interviewDate && daysUntil(application.interviewDate) >= 0 && daysUntil(application.interviewDate) <= 3
+                            ? 'text-blue-600 font-semibold'
+                            : ''
+                    }>
+                        {new Date(application.interviewDate).toLocaleDateString()}
+                    </span>
+                ) : (
+                    <span className="text-gray-300">—</span>
+                )}
+            </td>
+            <td className="p-4 text-sm text-gray-600">
+                {application.salary || <span className="text-gray-300">—</span>}
+            </td>
+            <td className="p-4 text-sm text-gray-600">
+                {application.recruiterName ? (
+                    <div className="flex flex-col gap-0.5">
+                        <span>{application.recruiterName}</span>
+                        {application.recruiterEmail && (
+                            <a
+                                href={`mailto:${application.recruiterEmail}`}
+                                className="flex items-center gap-1 text-blue-500 hover:text-blue-700 text-xs"
+                            >
+                                <Mail size={10} />
+                                {application.recruiterEmail}
+                            </a>
+                        )}
+                    </div>
+                ) : (
+                    <span className="text-gray-300">—</span>
+                )}
             </td>
             <td className="p-4 text-sm text-gray-600">
                 {new Date(application.lastModifiedDate).toLocaleDateString()}

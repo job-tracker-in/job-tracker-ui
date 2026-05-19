@@ -9,7 +9,11 @@ export interface JobApplication {
     appliedDate: string;
     notes: string;
     lastModifiedDate: string;
-    jobUrl: string
+    jobUrl: string;
+    interviewDate?: string;
+    salary?: string;
+    recruiterName?: string;
+    recruiterEmail?: string;
 }
 
 export interface ApiResponse {
@@ -37,9 +41,13 @@ export interface FormData {
     source: string;
     status: string;
     appliedDate: string;
-    jobUrl: string
+    jobUrl: string;
     notes: string;
     lastModifiedDate: string;
+    interviewDate?: string;
+    salary?: string;
+    recruiterName?: string;
+    recruiterEmail?: string;
 }
 
 // History Types

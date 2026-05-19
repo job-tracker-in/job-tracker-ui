@@ -9,7 +9,10 @@ import {
     MoreVertical,
     Edit,
     Trash2,
-    History
+    History,
+    Clock,
+    DollarSign,
+    User,
 } from "lucide-react";
 
 interface KanbanCardProps {
@@ -34,6 +37,23 @@ export default function KanbanCard({
         const d = new Date(date);
         return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     };
+
+    const daysSince = (date: string) => {
+        return Math.floor((Date.now() - new Date(date).getTime()) / 86400000);
+    };
+
+    const daysUntil = (date: string) => {
+        return Math.ceil((new Date(date).getTime() - Date.now()) / 86400000);
+    };
+
+    const showFollowUp =
+        ['APPLIED', 'INTERVIEW'].includes(application.status) &&
+        daysSince(application.lastModifiedDate) >= 7;
+
+    const interviewSoon =
+        application.interviewDate &&
+        daysUntil(application.interviewDate) >= 0 &&
+        daysUntil(application.interviewDate) <= 3;
 
     const handleDelete = async () => {
         if (onDelete && confirm('Are you sure you want to delete this application?')) {
@@ -61,6 +81,22 @@ export default function KanbanCard({
                 isDragging ? 'opacity-50 rotate-2 scale-95' : ''
             }`}
         >
+            {/* Follow-up / Interview soon badges */}
+            {(showFollowUp || interviewSoon) && (
+                <div className="flex gap-1.5 mb-2 flex-wrap">
+                    {showFollowUp && (
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 font-medium">
+                            Follow up?
+                        </span>
+                    )}
+                    {interviewSoon && (
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium">
+                            Interview in {daysUntil(application.interviewDate!)}d
+                        </span>
+                    )}
+                </div>
+            )}
+
             {/* Header */}
             <div className="flex items-start justify-between mb-2">
                 <h4 className="font-semibold text-sm text-gray-900 line-clamp-2 flex-1">
@@ -143,12 +179,36 @@ export default function KanbanCard({
                 </div>
             )}
 
-            {/* Date */}
-            <div className="flex items-center gap-2 mt-3 pt-2 border-t border-gray-100">
-                <Calendar className="w-3.5 h-3.5 text-gray-400" />
-                <span className="text-xs text-gray-500">
-                    {formatDate(application.appliedDate)}
-                </span>
+            {/* Salary */}
+            {application.salary && (
+                <div className="flex items-center gap-2 mb-2">
+                    <DollarSign className="w-3.5 h-3.5 text-green-500" />
+                    <span className="text-xs text-green-700 font-medium">{application.salary}</span>
+                </div>
+            )}
+
+            {/* Recruiter */}
+            {application.recruiterName && (
+                <div className="flex items-center gap-2 mb-2">
+                    <User className="w-3.5 h-3.5 text-gray-400" />
+                    <span className="text-xs text-gray-500">{application.recruiterName}</span>
+                </div>
+            )}
+
+            {/* Date row */}
+            <div className="flex items-center gap-3 mt-3 pt-2 border-t border-gray-100 flex-wrap">
+                <div className="flex items-center gap-1.5">
+                    <Calendar className="w-3.5 h-3.5 text-gray-400" />
+                    <span className="text-xs text-gray-500">{formatDate(application.appliedDate)}</span>
+                </div>
+                {application.interviewDate && (
+                    <div className="flex items-center gap-1.5">
+                        <Clock className={`w-3.5 h-3.5 ${interviewSoon ? 'text-blue-500' : 'text-gray-400'}`} />
+                        <span className={`text-xs ${interviewSoon ? 'text-blue-600 font-semibold' : 'text-gray-500'}`}>
+                            {formatDate(application.interviewDate)}
+                        </span>
+                    </div>
+                )}
             </div>
 
             {/* Notes Preview */}

@@ -7,7 +7,7 @@ interface QuickEditModalProps {
     application: JobApplication | null;
     isOpen: boolean;
     onClose: () => void;
-    onSave: (id: string, updates: { status?: string; notes?: string }) => Promise<boolean>;
+    onSave: (id: string, updates: Partial<JobApplication>) => Promise<boolean>;
 }
 
 export default function QuickEditModal({
@@ -18,29 +18,34 @@ export default function QuickEditModal({
                                        }: QuickEditModalProps) {
     const [status, setStatus] = useState('');
     const [notes, setNotes] = useState('');
+    const [interviewDate, setInterviewDate] = useState('');
+    const [salary, setSalary] = useState('');
+    const [recruiterName, setRecruiterName] = useState('');
+    const [recruiterEmail, setRecruiterEmail] = useState('');
 
-    // Update state when application changes
     useEffect(() => {
         if (application) {
             setStatus(application.status);
             setNotes(application.notes);
+            setInterviewDate(application.interviewDate ?? '');
+            setSalary(application.salary ?? '');
+            setRecruiterName(application.recruiterName ?? '');
+            setRecruiterEmail(application.recruiterEmail ?? '');
         }
     }, [application]);
 
     const handleSave = async () => {
         if (!application) return;
 
-        const updates: { status?: string; notes?: string } = {};
+        const updates: Partial<JobApplication> = {};
 
-        // Only include fields that changed
-        if (status !== application.status) {
-            updates.status = status;
-        }
-        if (notes !== application.notes) {
-            updates.notes = notes;
-        }
+        if (status !== application.status) updates.status = status;
+        if (notes !== application.notes) updates.notes = notes;
+        if (interviewDate !== (application.interviewDate ?? '')) updates.interviewDate = interviewDate;
+        if (salary !== (application.salary ?? '')) updates.salary = salary;
+        if (recruiterName !== (application.recruiterName ?? '')) updates.recruiterName = recruiterName;
+        if (recruiterEmail !== (application.recruiterEmail ?? '')) updates.recruiterEmail = recruiterEmail;
 
-        // If nothing changed, just close
         if (Object.keys(updates).length === 0) {
             onClose();
             return;
@@ -78,6 +83,49 @@ export default function QuickEditModal({
                         </select>
                     </div>
 
+                    {/* Interview Date + Salary */}
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Interview Date</label>
+                            <input
+                                type="date"
+                                value={interviewDate}
+                                onChange={(e) => setInterviewDate(e.target.value)}
+                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Salary / Compensation</label>
+                            <input
+                                type="text"
+                                value={salary}
+                                onChange={(e) => setSalary(e.target.value)}
+                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
+                                placeholder="e.g. $120k, €80k/yr"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Recruiter Name</label>
+                            <input
+                                type="text"
+                                value={recruiterName}
+                                onChange={(e) => setRecruiterName(e.target.value)}
+                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
+                                placeholder="Jane Smith"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Recruiter Email</label>
+                            <input
+                                type="email"
+                                value={recruiterEmail}
+                                onChange={(e) => setRecruiterEmail(e.target.value)}
+                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
+                                placeholder="jane@company.com"
+                            />
+                        </div>
+                    </div>
+
                     {/* Notes */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -86,7 +134,7 @@ export default function QuickEditModal({
                         <textarea
                             value={notes}
                             onChange={(e) => setNotes(e.target.value)}
-                            rows={5}
+                            rows={4}
                             className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
                             placeholder="Add notes about this application..."
                         />
