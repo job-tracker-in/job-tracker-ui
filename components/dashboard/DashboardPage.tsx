@@ -14,6 +14,7 @@ import ThemeToggle from "@/components/dashboard/ThemeToggle";
 import AddApplicationModal from "@/components/dashboard/AddApplicationModal";
 import QuickEditModal from "@/components/dashboard/QuickEditModal";
 import ApplicationHistoryModal from "@/components/dashboard/ApplicationHistoryModal";
+import ExtensionPromoModal from "@/components/dashboard/ExtensionPromoModal";
 import { Columns, List } from "lucide-react";
 import { useTheme } from "@/app/contexts/ThemeContext";
 
@@ -283,6 +284,9 @@ export default function DashboardPage() {
                     applicationId={historyApplicationId}
                     fetchHistory={fetchApplicationHistory}
                 />
+
+                {/* Chrome Extension Promo — auto-shows on first login */}
+                <ExtensionPromoModal />
             </div>
 
             {/* Custom Animations */}
