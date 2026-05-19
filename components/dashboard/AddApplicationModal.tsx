@@ -84,7 +84,7 @@ export default function AddApplicationModal({
                                 >
                                     Chrome Extension
                                 </a>{" "}
-                                auto-fills job details directly from LinkedIn, Indeed & more with one click.
+                                auto-fills job details directly from LinkedIn job postings with one click.
                             </p>
                         </div>
                         <div className="flex items-center gap-2 flex-shrink-0">

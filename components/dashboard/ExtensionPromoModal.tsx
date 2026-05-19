@@ -47,14 +47,14 @@ export default function ExtensionPromoModal() {
                         Add jobs in one click
                     </h2>
                     <p className="text-gray-500 text-sm leading-relaxed mb-6">
-                        Our Chrome extension detects job postings on LinkedIn, Indeed, Glassdoor & more —
+                        Our Chrome extension detects job postings on LinkedIn —
                         and sends all the details straight to your tracker without any copy-pasting.
                     </p>
 
                     <ul className="space-y-2 mb-7">
                         {[
                             "Auto-fills company, title, location & URL",
-                            "Works on all major job boards",
+                            "Works on LinkedIn job postings",
                             "One click to log any job instantly",
                         ].map((item) => (
                             <li key={item} className="flex items-center gap-2.5 text-sm text-gray-600">

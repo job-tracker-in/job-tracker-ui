@@ -1,6 +1,13 @@
 import Link from 'next/link';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
-export default function Home() {
+export default async function Home() {
+    const session = await getServerSession(authOptions);
+    if (session) {
+        redirect('/dashboard');
+    }
     return (
         <div className="min-h-screen bg-[#050816] text-[#E8F0FF] overflow-x-hidden">
             {/* Background */}
@@ -134,13 +141,13 @@ export default function Home() {
                                 </span>
                             </h2>
                             <p className="text-[#8B92B0] text-lg leading-relaxed mb-8 max-w-xl">
-                                Stop copying and pasting job details manually. Our Chrome extension detects job postings on LinkedIn, Indeed, and other job boards — and sends them straight to your tracker with a single click.
+                                Stop copying and pasting job details manually. Our Chrome extension detects job postings on LinkedIn — and sends them straight to your tracker with a single click.
                             </p>
                             <ul className="space-y-3 mb-10">
                                 {[
                                     "Auto-fills company, title, location & job URL",
-                                    "Works on LinkedIn, Indeed, Glassdoor & more",
-                                    "One click to log any job posting instantly",
+                                    "Works on LinkedIn job postings",
+                                    "One click to log any job instantly",
                                     "No copy-paste, no switching tabs"
                                 ].map((item, i) => (
                                     <li key={i} className="flex items-center gap-3 text-[#8B92B0]">
