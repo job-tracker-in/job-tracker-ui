@@ -13,6 +13,7 @@ export default function Home() {
                 </div>
                 <nav className="flex gap-10">
                     <a href="#features" className="text-[#8B92B0] hover:text-[#00FFA3] transition-colors uppercase text-sm">Features</a>
+                    <a href="#extension" className="text-[#8B92B0] hover:text-[#00FFA3] transition-colors uppercase text-sm">Extension</a>
                     <a href="#about" className="text-[#8B92B0] hover:text-[#00FFA3] transition-colors uppercase text-sm">About</a>
                     <Link href="/login" className="text-[#8B92B0] hover:text-[#00FFA3] transition-colors uppercase text-sm">Login</Link>
                 </nav>
@@ -113,6 +114,66 @@ export default function Home() {
                             <p className="text-[#8B92B0] leading-relaxed">{feature.desc}</p>
                         </div>
                     ))}
+                </div>
+            </section>
+
+            {/* Chrome Extension */}
+            <section id="extension" className="relative z-10 py-32 px-[5%] max-w-7xl mx-auto">
+                <div className="bg-gradient-to-br from-[#00FFA3]/10 to-[#FFD93D]/5 border border-[#00FFA3]/30 p-12 md:p-16 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-[#00FFA3]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+                    <div className="relative z-10 flex flex-col md:flex-row items-center gap-12">
+                        <div className="flex-1">
+                            <div className="inline-flex items-center gap-2 bg-[#00FFA3]/10 border border-[#00FFA3]/30 px-4 py-2 mb-6 text-[#00FFA3] text-sm uppercase tracking-widest font-bold">
+                                <span>New</span>
+                                <span className="text-xs">Chrome Extension</span>
+                            </div>
+                            <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
+                                Add Jobs in<br />
+                                <span className="bg-gradient-to-r from-[#00FFA3] to-[#FFD93D] bg-clip-text text-transparent">
+                                    One Click
+                                </span>
+                            </h2>
+                            <p className="text-[#8B92B0] text-lg leading-relaxed mb-8 max-w-xl">
+                                Stop copying and pasting job details manually. Our Chrome extension detects job postings on LinkedIn, Indeed, and other job boards — and sends them straight to your tracker with a single click.
+                            </p>
+                            <ul className="space-y-3 mb-10">
+                                {[
+                                    "Auto-fills company, title, location & job URL",
+                                    "Works on LinkedIn, Indeed, Glassdoor & more",
+                                    "One click to log any job posting instantly",
+                                    "No copy-paste, no switching tabs"
+                                ].map((item, i) => (
+                                    <li key={i} className="flex items-center gap-3 text-[#8B92B0]">
+                                        <span className="text-[#00FFA3] font-bold text-lg">✓</span>
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                            <a
+                                href="https://chromewebstore.google.com/detail/job-tracker-extension/gmpcfhjnmladcmlnpemnegmiddeebdce"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-3 px-10 py-4 bg-[#00FFA3] text-[#0A0E27] font-bold uppercase hover:bg-transparent hover:text-[#00FFA3] border-2 border-[#00FFA3] transition-all"
+                            >
+                                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+                                </svg>
+                                Add to Chrome — Free
+                            </a>
+                        </div>
+                        <div className="flex-shrink-0 flex flex-col items-center gap-6">
+                            <div className="w-48 h-48 bg-gradient-to-br from-[#0A0E27] to-[#0A0E27]/60 border-2 border-[#00FFA3]/40 flex items-center justify-center">
+                                <div className="text-center">
+                                    <div className="text-7xl mb-3">🧩</div>
+                                    <div className="text-[#00FFA3] font-bold text-sm uppercase tracking-widest">Extension</div>
+                                </div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-3xl font-extrabold text-[#00FFA3]">1-Click</div>
+                                <div className="text-[#8B92B0] text-xs uppercase tracking-widest mt-1">Job Logging</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
