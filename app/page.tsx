@@ -36,7 +36,7 @@ export default async function Home() {
                 </h1>
                 <p className="text-xl text-[#8B92B0] max-w-2xl mb-12 leading-relaxed">
                     A simple, powerful Kanban board to organize your job applications.
-                    Track every opportunity from wishlist to offer in one clean dashboard.
+                    Track every opportunity from applied to offer in one clean dashboard.
                 </p>
                 <Link
                     href="/login"
@@ -96,7 +96,7 @@ export default async function Home() {
                         {
                             icon: "📝",
                             title: "Notes & Details",
-                            desc: "Add notes to each application to track important details. Store company information, job titles, locations, salary ranges, and any other details you need. Keep everything in one place for easy reference."
+                            desc: "Add notes to each application to track important details. Store company information, job titles, locations, and any other details you need. Keep everything in one place for easy reference."
                         },
                         {
                             icon: "📅",
@@ -112,6 +112,11 @@ export default async function Home() {
                             icon: "🔍",
                             title: "Filter & Sort",
                             desc: "Filter applications by status, company, or applied date. Sort your jobs to find what you need quickly. Focus on specific companies or time periods with powerful filtering options."
+                        },
+                        {
+                            icon: "📋",
+                            title: "Table View",
+                            desc: "Switch between Kanban board and a clean table view with a single click. The table view lets you see all your applications in a compact list with bulk selection and delete — perfect for quick reviews."
                         }
                     ].map((feature, i) => (
                         <div key={i} className="bg-gradient-to-br from-[#0A0E27]/80 to-[#0A0E27]/40 border border-white/10 p-12 relative overflow-hidden hover:border-[#00FFA3] hover:-translate-y-2 transition-all group">
@@ -195,7 +200,7 @@ export default async function Home() {
                     <div className="text-center">
                         <div className="w-20 h-20 bg-[#00FFA3] text-[#0A0E27] rounded-full flex items-center justify-center text-3xl font-bold mb-6 mx-auto">1</div>
                         <h3 className="text-2xl font-bold mb-4">Add Jobs</h3>
-                        <p className="text-[#8B92B0]">Create cards for each job application with company name, position, location, and job posting link.</p>
+                        <p className="text-[#8B92B0]">Create cards manually with company name, position, location, and job posting link — or use the <a href="#extension" className="text-[#00FFA3] hover:underline">Chrome extension</a> to add LinkedIn jobs in one click.</p>
                     </div>
 
                     <div className="text-center">
@@ -231,7 +236,7 @@ export default async function Home() {
             <footer className="relative z-10 py-12 px-[5%] text-center text-[#8B92B0] text-sm border-t border-white/10">
                 <p>
                     &copy; 2026 Job Tracker. A simple tool for job seekers.{' '}
-                    <a href="#" className="text-[#00FFA3] hover:underline">Privacy Policy</a> |{' '}
+                    <Link href="/privacy" className="text-[#00FFA3] hover:underline">Privacy Policy</Link> |{' '}
                     <a href="#" className="text-[#00FFA3] hover:underline">Terms</a>
                 </p>
             </footer>
