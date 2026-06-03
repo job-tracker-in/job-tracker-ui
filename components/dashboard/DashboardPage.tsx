@@ -19,7 +19,7 @@ import { Columns, List } from "lucide-react";
 import { useTheme } from "@/app/contexts/ThemeContext";
 
 export default function DashboardPage() {
-    const { session, status, update, handleLogout, isLoading, isAuthenticated } = useAuth();
+    const { session, status, handleLogout, isLoading, isAuthenticated, accessToken } = useAuth();
     const { filters, handleFilterChange, clearFilters, buildQueryString } = useFilters();
     const { theme } = useTheme();
 
@@ -33,11 +33,9 @@ export default function DashboardPage() {
         createApplication,
         updateApplication,
         updateApplicationFields,
-        deleteApplications,
     } = useApplications({
-        session,
+        accessToken,
         queryString: buildQueryString(),
-        updateSession: update,
     });
 
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -50,12 +48,12 @@ export default function DashboardPage() {
 
     // Fetch applications when session is ready or filters change
     useEffect(() => {
-        if (session?.accessToken) {
+        if (accessToken) {
             fetchApplications();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
-        session?.accessToken,
+        accessToken,
         filters.status,
         filters.from,
         filters.to,
@@ -120,15 +118,7 @@ export default function DashboardPage() {
         setHistoryApplicationId("");
     };
 
-    // Handle delete
-    const handleDelete = async (ids?: string[]): Promise<boolean> => {
-        const idsToDelete = ids || selectedIds;
-        const success = await deleteApplications(idsToDelete);
-        if (success) {
-            setSelectedIds([]);
-        }
-        return success;
-    };
+    const handleDelete = async (_ids?: string[]): Promise<boolean> => false;
 
     return (
         <div className={`min-h-screen p-4 md:p-6 transition-colors duration-300 relative overflow-hidden ${
@@ -172,9 +162,9 @@ export default function DashboardPage() {
                 <div className="flex items-start gap-3 mb-4">
                     <div className="flex-1">
                         <DashboardHeader
-                            userName={session?.user?.name}
+                            userName={session?.user?.user_metadata?.full_name ?? session?.user?.email}
                             totalElements={totalElements}
-                            hasSessionError={!!session?.error}
+                            hasSessionError={false}
                             onLogout={handleLogout}
                         />
                     </div>
@@ -186,7 +176,7 @@ export default function DashboardPage() {
                     filters={filters}
                     onFilterChange={handleFilterChange}
                     onClearFilters={clearFilters}
-                    session={session}
+                    accessToken={accessToken}
                 />
 
                 {/* Controls */}

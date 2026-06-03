@@ -1,46 +1,29 @@
 "use client";
 
-import { signIn, useSession } from "next-auth/react";
+import { createClient } from '@/lib/supabase/client'
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { LogIn, KeyRound, Loader2 } from "lucide-react";
 
 export default function LoginPage() {
-    const { data: session, status } = useSession();
-    const router = useRouter();
-    const [isSigningIn, setIsSigningIn] = useState(false);
+    const [isSigningIn, setIsSigningIn] = useState(false)
+    const router = useRouter()
+    const supabase = createClient()
 
-    // Redirect if already authenticated
     useEffect(() => {
-        if (session && status === "authenticated") {
-            router.replace("/dashboard");
-        }
-    }, [session, status, router]);
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            if (session) router.replace('/dashboard')
+        })
+    }, [])
 
     const handleSignIn = async () => {
-        setIsSigningIn(true);
-        try {
-            await signIn("keycloak", {
-                callbackUrl: "/dashboard",
-            });
-        } catch (error) {
-            console.error("Sign in error:", error);
-            setIsSigningIn(false);
-        }
-    };
-
-    // Show loading state during authentication check
-    if (status === "loading") {
-        return (
-            <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-4 border-cyan-400 border-t-transparent"></div>
-            </div>
-        );
-    }
-
-    // Don't render login form if already authenticated
-    if (session) {
-        return null;
+        setIsSigningIn(true)
+        await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                redirectTo: `${window.location.origin}/auth/callback`,
+            },
+        })
     }
 
     return (
@@ -48,40 +31,29 @@ export default function LoginPage() {
 
             {/* Animated Background Elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {/* Glowing Orbs */}
                 <div className="absolute top-20 left-20 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-float"></div>
                 <div className="absolute top-32 right-40 w-72 h-72 bg-emerald-500/15 rounded-full blur-3xl animate-float-delayed"></div>
                 <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl animate-float-slow"></div>
-
-                {/* Twinkling Stars/Particles */}
                 <div className="absolute top-24 right-1/4 w-1 h-1 bg-cyan-400 rounded-full animate-twinkle shadow-lg shadow-cyan-400/50"></div>
                 <div className="absolute top-40 left-1/4 w-1 h-1 bg-emerald-400 rounded-full animate-twinkle-delayed shadow-lg shadow-emerald-400/50"></div>
                 <div className="absolute top-56 right-1/3 w-1 h-1 bg-teal-400 rounded-full animate-twinkle-slow shadow-lg shadow-teal-400/50"></div>
                 <div className="absolute top-72 left-1/2 w-1 h-1 bg-cyan-400 rounded-full animate-twinkle shadow-lg shadow-cyan-400/50"></div>
                 <div className="absolute bottom-32 right-1/4 w-1 h-1 bg-emerald-400 rounded-full animate-twinkle-delayed shadow-lg shadow-emerald-400/50"></div>
-
-                {/* Dark Mountains/Waves Silhouettes */}
                 <div className="absolute bottom-0 left-0 w-full h-48">
                     <div className="absolute bottom-0 right-1/4 w-64 h-32 bg-slate-800/60 rounded-t-full blur-md"></div>
                     <div className="absolute bottom-0 left-1/3 w-48 h-40 bg-gray-800/50 rounded-t-full blur-md"></div>
                     <div className="absolute bottom-0 right-1/3 w-56 h-36 bg-slate-800/70 rounded-t-full blur-md"></div>
                 </div>
-
-                {/* Subtle Grid Pattern */}
                 <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.03)_1px,transparent_1px)] bg-[size:50px_50px] opacity-40"></div>
             </div>
 
             {/* Login Card */}
             <div className="relative bg-slate-800/40 backdrop-blur-xl rounded-3xl shadow-2xl p-8 sm:p-10 w-full max-w-md border border-slate-700/50 transform hover:scale-[1.02] transition-transform duration-300">
-
-                {/* Logo/Icon */}
                 <div className="flex justify-center mb-6">
                     <div className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-emerald-400 rounded-2xl flex items-center justify-center shadow-lg shadow-cyan-500/30 border border-cyan-300/20">
                         <KeyRound className="w-8 h-8 text-gray-900" strokeWidth={2} />
                     </div>
                 </div>
-
-                {/* Header */}
                 <div className="text-center mb-8">
                     <h1 className="text-4xl sm:text-5xl font-light text-white tracking-widest mb-2 drop-shadow-lg">
                         WELCOME
@@ -90,8 +62,6 @@ export default function LoginPage() {
                         Please sign in to continue
                     </p>
                 </div>
-
-                {/* Sign In Button */}
                 <button
                     onClick={handleSignIn}
                     disabled={isSigningIn}
@@ -105,18 +75,14 @@ export default function LoginPage() {
                     ) : (
                         <>
                             <LogIn className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                            Sign In
+                            Sign in with Google
                         </>
                     )}
                 </button>
-
-                {/* Additional Info */}
                 <div className="mt-6 text-center space-y-3">
                     <p className="text-slate-500 text-xs">
-                        Secure authentication powered by Keycloak
+                        Secure authentication powered by Supabase
                     </p>
-
-                    {/* Contact Support */}
                     <div className="pt-3 border-t border-slate-700">
                         <p className="text-slate-400 text-sm mb-1">Need help?</p>
                         <a
@@ -129,69 +95,26 @@ export default function LoginPage() {
                 </div>
             </div>
 
-            {/* Footer Credit */}
             <div className="absolute bottom-4 sm:bottom-6 text-center w-full px-4">
                 <p className="text-slate-500 text-sm font-light tracking-wide">
                     designed with <span className="text-red-500">❤️</span> by <span className="font-semibold text-slate-400">kr</span>
                 </p>
             </div>
 
-            {/* Custom Animations */}
             <style jsx global>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-        
-        @keyframes float-delayed {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-15px); }
-        }
-        
-        @keyframes float-slow {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
-        }
-        
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.3; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.5); }
-        }
-        
-        @keyframes twinkle-delayed {
-          0%, 100% { opacity: 0.4; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.3); }
-        }
-        
-        @keyframes twinkle-slow {
-          0%, 100% { opacity: 0.2; transform: scale(1); }
-          50% { opacity: 0.8; transform: scale(1.2); }
-        }
-        
-        .animate-float {
-          animation: float 8s ease-in-out infinite;
-        }
-        
-        .animate-float-delayed {
-          animation: float-delayed 10s ease-in-out infinite;
-        }
-        
-        .animate-float-slow {
-          animation: float-slow 12s ease-in-out infinite;
-        }
-        
-        .animate-twinkle {
-          animation: twinkle 2s ease-in-out infinite;
-        }
-        
-        .animate-twinkle-delayed {
-          animation: twinkle-delayed 3s ease-in-out infinite;
-        }
-        
-        .animate-twinkle-slow {
-          animation: twinkle-slow 4s ease-in-out infinite;
-        }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+        @keyframes float-delayed { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
+        @keyframes float-slow { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.5); } }
+        @keyframes twinkle-delayed { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } }
+        @keyframes twinkle-slow { 0%, 100% { opacity: 0.2; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.2); } }
+        .animate-float { animation: float 8s ease-in-out infinite; }
+        .animate-float-delayed { animation: float-delayed 10s ease-in-out infinite; }
+        .animate-float-slow { animation: float-slow 12s ease-in-out infinite; }
+        .animate-twinkle { animation: twinkle 2s ease-in-out infinite; }
+        .animate-twinkle-delayed { animation: twinkle-delayed 3s ease-in-out infinite; }
+        .animate-twinkle-slow { animation: twinkle-slow 4s ease-in-out infinite; }
       `}</style>
         </div>
-    );
+    )
 }

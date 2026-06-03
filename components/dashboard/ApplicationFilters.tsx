@@ -9,14 +9,14 @@ interface ApplicationFiltersProps {
     filters: Filters;
     onFilterChange: <K extends keyof Filters>(key: K, value: Filters[K]) => void;
     onClearFilters: () => void;
-    session: any;
+    accessToken: string | null;
 }
 
 export default function ApplicationFilters({
                                                filters,
                                                onFilterChange,
                                                onClearFilters,
-                                               session,
+                                               accessToken,
                                            }: ApplicationFiltersProps) {
     const [showAdvanced, setShowAdvanced] = useState(false);
 
@@ -45,7 +45,7 @@ export default function ApplicationFilters({
                     <CompanyAutocomplete
                         value={filters.company}
                         onChange={(value) => onFilterChange('company', value)}
-                        session={session}
+                        accessToken={accessToken}
                     />
                 </div>
 

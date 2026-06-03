@@ -1,59 +1,43 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { createClient } from '@/lib/supabase/client'
+import { Session } from '@supabase/supabase-js'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export const useAuth = () => {
-    const { data: session, status, update } = useSession();
-    const router = useRouter();
+    const [session, setSession] = useState<Session | null>(null)
+    const [status, setStatus] = useState<'loading' | 'authenticated' | 'unauthenticated'>('loading')
+    const router = useRouter()
+    const supabase = createClient()
 
-    // Refresh session every 5 minutes to keep token fresh
     useEffect(() => {
-        const interval = setInterval(() => {
-            console.log("Refreshing session...");
-            update();
-        }, 5 * 60 * 1000); // 5 minutes
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setSession(session)
+            setStatus(session ? 'authenticated' : 'unauthenticated')
+            if (!session) router.replace('/login')
+        })
 
-        return () => clearInterval(interval);
-    }, [update]);
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+            setSession(session)
+            setStatus(session ? 'authenticated' : 'unauthenticated')
+            if (!session) router.replace('/login')
+        })
 
-    // Handle logout
+        return () => subscription.unsubscribe()
+    }, [])
+
     const handleLogout = async () => {
-        const keycloakIssuer = process.env.NEXT_PUBLIC_KEYCLOAK_ISSUER;
-        const clientId = process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID;
-        const appUrl = process.env.NEXT_PUBLIC_APP_URL;
-
-        const keycloakLogoutUrl =
-            `${keycloakIssuer}/protocol/openid-connect/logout?` +
-            `client_id=${clientId}&` +
-            `post_logout_redirect_uri=${encodeURIComponent(appUrl + "/login")}`;
-
-        await signOut({ redirect: false });
-        window.location.href = keycloakLogoutUrl;
-    };
-
-    // Check if token refresh failed
-    useEffect(() => {
-        if (session?.error === "RefreshAccessTokenError") {
-            console.error("Token refresh failed, logging out...");
-            signOut({ callbackUrl: "/login" });
-        }
-    }, [session]);
-
-    // Redirect if not authenticated
-    useEffect(() => {
-        if (status !== "loading" && !session) {
-            router.replace("/login");
-        }
-    }, [status, session, router]);
+        await supabase.auth.signOut()
+        router.replace('/login')
+    }
 
     return {
         session,
         status,
-        update,
         handleLogout,
-        isLoading: status === "loading",
+        isLoading: status === 'loading',
         isAuthenticated: !!session,
-    };
-};
+        accessToken: session?.access_token ?? null,
+    }
+}

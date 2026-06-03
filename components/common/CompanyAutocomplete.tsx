@@ -5,20 +5,20 @@ import { useState, useEffect } from "react";
 interface CompanyAutocompleteProps {
     value: string;
     onChange: (value: string) => void;
-    session: any;
+    accessToken: string | null;
 }
 
 export default function CompanyAutocomplete({
                                                 value,
                                                 onChange,
-                                                session,
+                                                accessToken,
                                             }: CompanyAutocompleteProps) {
     const [suggestions, setSuggestions] = useState<string[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
     useEffect(() => {
-        if (!value || value.length < 2 || !session?.accessToken) {
+        if (!value || value.length < 2 || !accessToken) {
             setSuggestions([]);
             return;
         }
@@ -29,7 +29,7 @@ export default function CompanyAutocomplete({
                     `${baseUrl}/companies?name=${encodeURIComponent(value)}`,
                     {
                         headers: {
-                            'Authorization': `Bearer ${session.accessToken}`,
+                            'Authorization': `Bearer ${accessToken}`,
                             'Content-Type': 'application/json',
                         },
                     }
@@ -48,7 +48,7 @@ export default function CompanyAutocomplete({
         }, 300);
 
         return () => clearTimeout(timer);
-    }, [value, session?.accessToken, baseUrl, session]);
+    }, [value, accessToken, baseUrl]);
 
     return (
         <div className="relative">
