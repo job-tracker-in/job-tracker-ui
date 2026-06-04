@@ -7,12 +7,9 @@ import Pagination from "./Pagination";
 interface ApplicationTableProps {
     applications: JobApplication[];
     loading: boolean;
-    selectedIds: string[];
     totalPages: number;
     totalElements: number;
     currentPage: number;
-    onToggleSelect: (id: string) => void;
-    onToggleSelectAll: () => void;
     onUpdate: (id: string, field: 'status' | 'notes', value: string) => Promise<boolean>;
     onQuickEdit: (application: JobApplication) => void;
     onPageChange: (page: number) => void;
@@ -22,12 +19,9 @@ interface ApplicationTableProps {
 export default function ApplicationTable({
                                              applications,
                                              loading,
-                                             selectedIds,
                                              totalPages,
                                              totalElements,
                                              currentPage,
-                                             onToggleSelect,
-                                             onToggleSelectAll,
                                              onUpdate,
                                              onQuickEdit,
                                              onPageChange,
@@ -55,14 +49,6 @@ export default function ApplicationTable({
                 <table className="w-full">
                     <thead className="bg-blue-50">
                     <tr>
-                        <th className="p-4 text-left">
-                            <input
-                                type="checkbox"
-                                checked={selectedIds.length === applications.length && applications.length > 0}
-                                onChange={onToggleSelectAll}
-                                className="w-4 h-4"
-                            />
-                        </th>
                         <th className="p-4 text-left text-sm font-semibold text-gray-700">Actions</th>
                         <th className="p-4 text-left text-sm font-semibold text-gray-700">Company</th>
                         <th className="p-4 text-left text-sm font-semibold text-gray-700">Location</th>
@@ -82,8 +68,6 @@ export default function ApplicationTable({
                         <ApplicationRow
                             key={app.id}
                             application={app}
-                            isSelected={selectedIds.includes(app.id)}
-                            onToggleSelect={onToggleSelect}
                             onUpdate={onUpdate}
                             onQuickEdit={() => onQuickEdit(app)}
                             onViewHistory={onViewHistory}
@@ -92,7 +76,6 @@ export default function ApplicationTable({
                     </tbody>
                 </table>
             </div>
-
             <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}

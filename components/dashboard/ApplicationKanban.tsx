@@ -8,7 +8,6 @@ interface ApplicationKanbanProps {
     loading: boolean;
     onUpdate: (id: string, field: 'status' | 'notes', value: string) => Promise<boolean>;
     onQuickEdit: (application: JobApplication) => void;
-    onDelete?: (ids: string[]) => Promise<boolean>;
     onViewHistory: (applicationId: string) => void;
 }
 
@@ -17,7 +16,6 @@ export default function ApplicationKanban({
                                               loading,
                                               onUpdate,
                                               onQuickEdit,
-                                              onDelete,
                                               onViewHistory,
                                           }: ApplicationKanbanProps) {
     const statusColumns = [
@@ -56,7 +54,6 @@ export default function ApplicationKanban({
                             applications={apps}
                             onUpdate={onUpdate}
                             onQuickEdit={onQuickEdit}
-                            onDelete={onDelete}
                             onViewHistory={onViewHistory}
                         />
                     );

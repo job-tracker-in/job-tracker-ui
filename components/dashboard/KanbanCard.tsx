@@ -8,7 +8,6 @@ import {
     MapPin,
     MoreVertical,
     Edit,
-    Trash2,
     History,
     Clock,
     DollarSign,
@@ -19,7 +18,6 @@ interface KanbanCardProps {
     application: JobApplication;
     onUpdate: (id: string, field: 'status' | 'notes', value: string) => Promise<boolean>;
     onQuickEdit: () => void;
-    onDelete?: (ids: string[]) => Promise<boolean>;
     onViewHistory: (applicationId: string) => void;
 }
 
@@ -27,7 +25,6 @@ export default function KanbanCard({
                                        application,
                                        onUpdate,
                                        onQuickEdit,
-                                       onDelete,
                                        onViewHistory,
                                    }: KanbanCardProps) {
     const [showMenu, setShowMenu] = useState(false);
@@ -54,13 +51,6 @@ export default function KanbanCard({
         application.interviewDate &&
         daysUntil(application.interviewDate) >= 0 &&
         daysUntil(application.interviewDate) <= 3;
-
-    const handleDelete = async () => {
-        if (onDelete && confirm('Are you sure you want to delete this application?')) {
-            await onDelete([application.id]);
-        }
-        setShowMenu(false);
-    };
 
     const handleDragStart = (e: React.DragEvent) => {
         setIsDragging(true);
@@ -137,15 +127,6 @@ export default function KanbanCard({
                                     <History className="w-4 h-4" />
                                     History
                                 </button>
-                                {onDelete && (
-                                    <button
-                                        onClick={handleDelete}
-                                        className="w-full px-3 py-2 text-left text-sm hover:bg-red-50 text-red-600 flex items-center gap-2"
-                                    >
-                                        <Trash2 className="w-4 h-4" />
-                                        Delete
-                                    </button>
-                                )}
                             </div>
                         </>
                     )}

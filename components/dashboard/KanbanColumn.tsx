@@ -10,7 +10,6 @@ interface KanbanColumnProps {
     applications: JobApplication[];
     onUpdate: (id: string, field: 'status' | 'notes', value: string) => Promise<boolean>;
     onQuickEdit: (application: JobApplication) => void;
-    onDelete?: (ids: string[]) => Promise<boolean>;
     onViewHistory: (applicationId: string) => void;
 }
 
@@ -20,7 +19,6 @@ export default function KanbanColumn({
                                          applications = [],
                                          onUpdate,
                                          onQuickEdit,
-                                         onDelete,
                                          onViewHistory,
                                      }: KanbanColumnProps) {
     const [isDragOver, setIsDragOver] = useState(false);
@@ -92,7 +90,6 @@ export default function KanbanColumn({
                         application={app}
                         onUpdate={onUpdate}
                         onQuickEdit={() => onQuickEdit(app)}
-                        onDelete={onDelete}
                         onViewHistory={onViewHistory}
                     />
                 ))}

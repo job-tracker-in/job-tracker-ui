@@ -7,8 +7,6 @@ import { ExternalLink, Mail } from "lucide-react";
 
 interface ApplicationRowProps {
     application: JobApplication;
-    isSelected: boolean;
-    onToggleSelect: (id: string) => void;
     onUpdate: (id: string, field: 'status' | 'notes', value: string) => Promise<boolean>;
     onQuickEdit: () => void;
     onViewHistory: (applicationId: string) => void;
@@ -16,8 +14,6 @@ interface ApplicationRowProps {
 
 export default function ApplicationRow({
                                            application,
-                                           isSelected,
-                                           onToggleSelect,
                                            onUpdate,
                                            onQuickEdit,
                                            onViewHistory,
@@ -65,14 +61,6 @@ export default function ApplicationRow({
 
     return (
         <tr className={`hover:bg-gray-50 ${showFollowUp ? 'bg-orange-50' : 'bg-white'}`}>
-            <td className="p-4">
-                <input
-                    type="checkbox"
-                    checked={isSelected}
-                    onChange={() => onToggleSelect(application.id)}
-                    className="w-4 h-4"
-                />
-            </td>
             <td className="p-4">
                 <button
                     onClick={onQuickEdit}

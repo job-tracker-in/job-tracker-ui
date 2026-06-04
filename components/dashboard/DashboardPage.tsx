@@ -38,7 +38,6 @@ export default function DashboardPage() {
         queryString: buildQueryString(),
     });
 
-    const [selectedIds, setSelectedIds] = useState<string[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [showQuickEditModal, setShowQuickEditModal] = useState(false);
     const [showHistoryModal, setShowHistoryModal] = useState(false);
@@ -81,21 +80,6 @@ export default function DashboardPage() {
         return null;
     }
 
-    // Toggle selection handlers
-    const toggleSelect = (id: string) => {
-        setSelectedIds(prev =>
-            prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-        );
-    };
-
-    const toggleSelectAll = () => {
-        if (selectedIds.length === applications.length) {
-            setSelectedIds([]);
-        } else {
-            setSelectedIds(applications.map(app => app.id));
-        }
-    };
-
     // Quick edit handlers
     const handleQuickEdit = (application: JobApplication) => {
         setEditingApplication(application);
@@ -118,7 +102,6 @@ export default function DashboardPage() {
         setHistoryApplicationId("");
     };
 
-    const handleDelete = async (_ids?: string[]): Promise<boolean> => false;
 
     return (
         <div className={`min-h-screen p-4 md:p-6 transition-colors duration-300 relative overflow-hidden ${
@@ -181,11 +164,8 @@ export default function DashboardPage() {
 
                 {/* Controls */}
                 <ControlsBar
-                    selectedCount={selectedIds.length}
                     onAdd={() => setShowModal(true)}
-                    onDelete={() => handleDelete()}
                     onRefresh={fetchApplications}
-                    showDelete={viewMode === 'table'}
                 >
                     {/* View Toggle */}
                     <div className={`flex items-center gap-1 rounded-full p-1 shadow-lg ml-auto border ${
@@ -229,7 +209,6 @@ export default function DashboardPage() {
                         loading={loading}
                         onUpdate={updateApplication}
                         onQuickEdit={handleQuickEdit}
-                        onDelete={handleDelete}
                         onViewHistory={handleViewHistory}
                     />
                 )}
@@ -239,12 +218,9 @@ export default function DashboardPage() {
                     <ApplicationTable
                         applications={applications}
                         loading={loading}
-                        selectedIds={selectedIds}
                         totalPages={totalPages}
                         totalElements={totalElements}
                         currentPage={filters.page}
-                        onToggleSelect={toggleSelect}
-                        onToggleSelectAll={toggleSelectAll}
                         onUpdate={updateApplication}
                         onQuickEdit={handleQuickEdit}
                         onPageChange={(page) => handleFilterChange('page', page)}
