@@ -15,6 +15,7 @@ import AddApplicationModal from "@/components/dashboard/AddApplicationModal";
 import QuickEditModal from "@/components/dashboard/QuickEditModal";
 import ApplicationHistoryModal from "@/components/dashboard/ApplicationHistoryModal";
 import ExtensionPromoModal from "@/components/dashboard/ExtensionPromoModal";
+import CvSection from "@/components/dashboard/CvSection";
 import { Columns, List } from "lucide-react";
 import { useTheme } from "@/app/contexts/ThemeContext";
 
@@ -153,6 +154,9 @@ export default function DashboardPage() {
                     </div>
                     <ThemeToggle />
                 </div>
+
+                {/* CV Upload */}
+                <CvSection accessToken={accessToken} />
 
                 {/* Filters */}
                 <ApplicationFilters
