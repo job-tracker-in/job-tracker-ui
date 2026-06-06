@@ -120,9 +120,9 @@ export default function KanbanCard({
                                         onQuickEdit();
                                         setShowMenu(false);
                                     }}
-                                    className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2"
+                                    className="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
                                 >
-                                    <Edit className="w-4 h-4" />
+                                    <Edit className="w-4 h-4 text-gray-500" />
                                     Edit
                                 </button>
                                 <button
@@ -130,9 +130,9 @@ export default function KanbanCard({
                                         onViewHistory(application.id);
                                         setShowMenu(false);
                                     }}
-                                    className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2"
+                                    className="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
                                 >
-                                    <History className="w-4 h-4" />
+                                    <History className="w-4 h-4 text-gray-500" />
                                     History
                                 </button>
                             </div>
