@@ -1,7 +1,7 @@
 "use client";
 
 import { JobApplication } from "@/types/application";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
     Building2,
     Calendar,
@@ -28,7 +28,9 @@ export default function KanbanCard({
                                        onViewHistory,
                                    }: KanbanCardProps) {
     const [showMenu, setShowMenu] = useState(false);
+    const [menuPos, setMenuPos] = useState({ top: 0, right: 0 });
     const [isDragging, setIsDragging] = useState(false);
+    const menuBtnRef = useRef<HTMLButtonElement>(null);
 
     const formatDate = (date: Date | string) => {
         const d = new Date(date);
@@ -94,7 +96,12 @@ export default function KanbanCard({
                 </h4>
                 <div className="relative">
                     <button
-                        onClick={() => setShowMenu(!showMenu)}
+                        ref={menuBtnRef}
+                        onClick={() => {
+                            const rect = menuBtnRef.current?.getBoundingClientRect()
+                            if (rect) setMenuPos({ top: rect.bottom + 4, right: window.innerWidth - rect.right })
+                            setShowMenu(!showMenu)
+                        }}
                         className="p-1 hover:bg-gray-100 rounded transition-colors"
                     >
                         <MoreVertical className="w-4 h-4 text-gray-400" />
@@ -103,10 +110,11 @@ export default function KanbanCard({
                     {showMenu && (
                         <>
                             <div
-                                className="fixed inset-0 z-10"
+                                className="fixed inset-0 z-40"
                                 onClick={() => setShowMenu(false)}
                             />
-                            <div className="absolute right-0 mt-1 w-40 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-20">
+                            <div style={{ top: menuPos.top, right: menuPos.right }}
+                                 className="fixed w-40 bg-white rounded-lg shadow-xl border border-gray-200 py-1 z-50">
                                 <button
                                     onClick={() => {
                                         onQuickEdit();
