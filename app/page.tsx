@@ -20,6 +20,7 @@ export default async function Home() {
                 </div>
                 <nav className="flex gap-10">
                     <a href="#features" className="text-[#8B92B0] hover:text-[#00FFA3] transition-colors uppercase text-sm">Features</a>
+                    <a href="#ai" className="text-[#8B92B0] hover:text-[#00FFA3] transition-colors uppercase text-sm">AI</a>
                     <a href="#extension" className="text-[#8B92B0] hover:text-[#00FFA3] transition-colors uppercase text-sm">Extension</a>
                     <a href="#about" className="text-[#8B92B0] hover:text-[#00FFA3] transition-colors uppercase text-sm">About</a>
                     <Link href="/login" className="text-[#8B92B0] hover:text-[#00FFA3] transition-colors uppercase text-sm">Login</Link>
@@ -126,6 +127,66 @@ export default async function Home() {
                             <p className="text-[#8B92B0] leading-relaxed">{feature.desc}</p>
                         </div>
                     ))}
+                </div>
+            </section>
+
+            {/* AI Cover Letter */}
+            <section id="ai" className="relative z-10 py-32 px-[5%] max-w-7xl mx-auto">
+                <div className="bg-gradient-to-br from-[#FFD93D]/10 to-[#FF6B6B]/5 border border-[#FFD93D]/30 p-12 md:p-16 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-72 h-72 bg-[#FFD93D]/5 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+                    <div className="relative z-10 flex flex-col md:flex-row items-center gap-12">
+                        <div className="flex-1">
+                            <div className="inline-flex items-center gap-2 bg-[#FFD93D]/10 border border-[#FFD93D]/30 px-4 py-2 mb-6 text-[#FFD93D] text-sm uppercase tracking-widest font-bold">
+                                <span>✨</span>
+                                <span>AI-Powered</span>
+                            </div>
+                            <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
+                                Cover Letters<br />
+                                <span className="bg-gradient-to-r from-[#FFD93D] to-[#FF6B6B] bg-clip-text text-transparent">
+                                    Written in Seconds
+                                </span>
+                            </h2>
+                            <p className="text-[#8B92B0] text-lg leading-relaxed mb-8 max-w-xl">
+                                Stop spending hours writing the same cover letter with different company names. Upload your CV once — then generate a fully tailored cover letter for any job with a single click, powered by Llama AI.
+                            </p>
+                            <ul className="space-y-3 mb-10">
+                                {[
+                                    "Reads your CV to highlight your most relevant experience",
+                                    "Analyses the job description to match the role",
+                                    "Generates a natural, personalised cover letter instantly",
+                                    "Available directly inside the Chrome extension popup"
+                                ].map((item, i) => (
+                                    <li key={i} className="flex items-center gap-3 text-[#8B92B0]">
+                                        <span className="text-[#FFD93D] font-bold text-lg">✓</span>
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                            <Link
+                                href="/login"
+                                className="inline-flex items-center gap-3 px-10 py-4 bg-[#FFD93D] text-[#0A0E27] font-bold uppercase hover:bg-transparent hover:text-[#FFD93D] border-2 border-[#FFD93D] transition-all"
+                            >
+                                Try It Free
+                            </Link>
+                        </div>
+                        <div className="flex-shrink-0 flex flex-col items-center gap-6">
+                            <div className="w-56 bg-gradient-to-br from-[#0A0E27] to-[#0A0E27]/60 border-2 border-[#FFD93D]/40 p-6 space-y-3">
+                                <div className="text-[#FFD93D] text-xs uppercase tracking-widest font-bold mb-4">Cover Letter Preview</div>
+                                <div className="h-2 bg-[#FFD93D]/30 rounded w-full" />
+                                <div className="h-2 bg-[#FFD93D]/20 rounded w-4/5" />
+                                <div className="h-2 bg-[#FFD93D]/20 rounded w-full" />
+                                <div className="h-2 bg-[#FFD93D]/15 rounded w-3/4" />
+                                <div className="h-2 bg-[#FFD93D]/20 rounded w-full" />
+                                <div className="h-2 bg-[#FFD93D]/15 rounded w-5/6" />
+                                <div className="h-2 bg-[#FFD93D]/20 rounded w-full" />
+                                <div className="h-2 bg-[#FFD93D]/15 rounded w-2/3" />
+                            </div>
+                            <div className="text-center">
+                                <div className="text-3xl font-extrabold text-[#FFD93D]">~5s</div>
+                                <div className="text-[#8B92B0] text-xs uppercase tracking-widest mt-1">Generation Time</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
